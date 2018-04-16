@@ -1,27 +1,34 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {StatusBar, StyleSheet, Text, View} from 'react-native';
+import {TabNavigator} from 'react-navigation';
 import {Constants} from 'expo';
+import DeckList from './components/DeckList';
 
-export default class App extends React.Component {
+const Tabs = TabNavigator({
+  Decks: {
+    screen: DeckList
+  },
+  New: {
+    screen: DeckList,
+    navigationOptions: {
+      tabBarLabel: 'New Deck'
+    }
+  }
+}, {
+  navigationOptions: {
+    header: null
+  }
+});
+
+export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View style={{flex: 1}}>
         <View  style={{height: Constants.statusBarHeight}}>
           <StatusBar translucent barStyle='dark-content' />
         </View>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+        <Tabs />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
