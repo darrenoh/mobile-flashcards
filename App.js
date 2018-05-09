@@ -3,13 +3,14 @@ import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import {TabNavigator} from 'react-navigation';
 import {Constants} from 'expo';
 import DeckList from './components/DeckList';
+import NewDeck from './components/NewDeck';
 
 const Tabs = TabNavigator({
   Decks: {
     screen: DeckList
   },
   New: {
-    screen: DeckList,
+    screen: NewDeck,
     navigationOptions: {
       tabBarLabel: 'New Deck'
     }
@@ -21,7 +22,7 @@ const Tabs = TabNavigator({
 });
 
 export default class App extends Component {
-  render() {
+  render () {
     return (
       <View style={{flex: 1}}>
         <View  style={{height: Constants.statusBarHeight}}>
