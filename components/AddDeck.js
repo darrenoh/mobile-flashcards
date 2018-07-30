@@ -1,16 +1,32 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {NavigationActions} from 'react-navigation';
+import {connect} from 'react-redux';
+import {addDeck} from '../actions';
 import {saveDeckTitle} from '../utils/helpers';
 
-export default class NewDeck extends Component {
+class AddDeck extends Component {
   state = {
     title: ''
   };
 
   submit = () => {
-    saveDeckTitle(this.state.title)
-      .then(() => this.setState({title: ''}));
-  }
+    const {title} = this.state;
+    const {decks, dispatch} = this.props;
+    if (!decks[title]) {
+      dispatch(addDeck({
+        [title]: {
+          title,
+          questions: []
+        }
+      }));
+      this.props.navigation.dispatch(NavigationActions.back({
+        key: 'New'
+      }));
+      saveDeckTitle(title)
+        .then(() => this.setState({title: ''}));
+    }
+  };
 
   render () {
     return (
@@ -38,3 +54,11 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   }
 });
+
+function mapStateToProps (state) {
+  return {
+    decks: state
+  };
+}
+
+export default connect(mapStateToProps)(AddDeck);

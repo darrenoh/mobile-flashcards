@@ -1,16 +1,21 @@
 import React, {Component} from 'react';
 import {StatusBar, StyleSheet, Text, View} from 'react-native';
-import {TabNavigator} from 'react-navigation';
+import {StackNavigator, TabNavigator} from 'react-navigation';
 import {Constants} from 'expo';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+import reducer from './reducers';
 import DeckList from './components/DeckList';
-import NewDeck from './components/NewDeck';
+import AddDeck from './components/AddDeck';
+import Deck from './components/Deck';
+import Quiz from './components/Quiz';
 
 const Tabs = TabNavigator({
   Decks: {
     screen: DeckList
   },
   New: {
-    screen: NewDeck,
+    screen: AddDeck,
     navigationOptions: {
       tabBarLabel: 'New Deck'
     }
@@ -21,15 +26,30 @@ const Tabs = TabNavigator({
   }
 });
 
+const MainNavigator = StackNavigator({
+  Home: {
+    screen: Tabs
+  },
+  Deck: {
+    screen: Deck
+  },
+  Quiz: {
+    screen: Quiz
+  }
+});
+
 export default class App extends Component {
   render () {
+    const store = createStore(reducer);
     return (
-      <View style={{flex: 1}}>
-        <View  style={{height: Constants.statusBarHeight}}>
-          <StatusBar translucent barStyle='dark-content' />
+      <Provider store={store}>
+        <View style={{flex: 1}}>
+          <View  style={{height: Constants.statusBarHeight}}>
+            <StatusBar translucent barStyle='dark-content' />
+          </View>
+          <MainNavigator />
         </View>
-        <Tabs />
-      </View>
+      </Provider>
     );
   }
 }

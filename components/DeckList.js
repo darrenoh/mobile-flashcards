@@ -1,19 +1,18 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {connect} from 'react-redux';
+import {receiveDecks} from '../actions';
 import {getDecks} from '../utils/helpers';
 
-export default class DeckList extends Component {
-  state = {
-    decks: {}
-  }
-
+class DeckList extends Component {
   componentDidMount () {
+    const {dispatch} = this.props;
     getDecks()
-      .then(decks => this.setState({decks}));
+      .then(decks => dispatch(receiveDecks(decks)))
   }
 
   render () {
-    const {decks} = this.state;
+    const {decks} = this.props;
     return (
       <View style={styles.container}>
         { Object.keys(decks).map(deck => 
@@ -35,3 +34,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   }
 });
+
+function mapStateToProps (decks) {
+  return {
+    decks
+  }
+}
+
+export default connect(mapStateToProps)(DeckList);
