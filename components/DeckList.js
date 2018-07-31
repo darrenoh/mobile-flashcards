@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
 import {receiveDecks} from '../actions';
 import {getDecks} from '../utils/helpers';
@@ -11,22 +11,31 @@ class DeckList extends Component {
       .then(decks => dispatch(receiveDecks(decks)))
   }
 
+  keyExtractor = (item) => item.title;
+
+  renderItem = ({item}) => {
+    const {navigation} = this.props;
+    return (
+      <TouchableOpacity onPress={() => navigation.navigate(
+        'Deck',
+        {title: item.title}
+      )}>
+        <View style={{margin: 20, alignItems: 'center'}}>
+          <Text>{item.title}</Text>
+          <Text>{item.questions.length} {item.questions.length === 1 ? 'card' : 'cards'}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   render () {
     const {decks} = this.props;
     return (
-      <View style={styles.container}>
-        {Object.keys(decks).map(deck => 
-          <TouchableOpacity onPress={() => this.props.navigation.navigate(
-            'Deck',
-            {deck: decks[deck]}
-          )}>
-            <View key={deck} style={{margin: 20, alignItems: 'center'}}>
-              <Text>{decks[deck].title}</Text>
-              <Text>{decks[deck].questions.length} {decks[deck].questions.length === 1 ? 'card' : 'cards'}</Text>
-            </View>
-          </TouchableOpacity>
-        )}
-      </View>
+      <FlatList
+        data={Object.values(decks)}
+        keyExtractor={this.keyExtractor}
+        renderItem={this.renderItem}
+      />
     );
   }
 }
@@ -34,16 +43,12 @@ class DeckList extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    backgroundColor: '#fff'
   }
 });
 
-function mapStateToProps (decks) {
-  return {
-    decks
-  }
+function mapStateToProps (state) {
+  return {decks: state};
 }
 
 export default connect(mapStateToProps)(DeckList);

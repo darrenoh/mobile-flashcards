@@ -1,15 +1,36 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import {addCardToDeck} from '../utils/helpers';
+import {NavigationActions} from 'react-navigation';
+import {connect} from 'react-redux';
+import {addDeck} from '../actions';
+import {saveDeck} from '../utils/helpers';
 
-export default class AddCard extends Component {
+class AddCard extends Component {
   state = {
     question: '',
     answer: ''
   };
 
   submit = () => {
-    addCardToDeck(this.props.title, this.state);
+    const {decks, dispatch, navigation, title} = this.props;
+    const deck = decks[title];
+    const question = this.state.question.trim();
+    const answer = this.state.answer.trim();
+    if (question && answer) {
+      deck.questions.push({
+        question,
+        answer
+      });
+      dispatch(addDeck({
+        [title]: deck
+      }));
+      navigation.dispatch(NavigationActions.back());
+      saveDeck(deck)
+        .then(() => this.setState({
+          question: '',
+          answer: ''
+        }));
+    }
   };
 
   render () {
@@ -42,3 +63,13 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   }
 });
+
+function mapStateToProps (state, {navigation}) {
+  const {title} = navigation.state.params;
+  return {
+    decks: state,
+    title
+  };
+}
+
+export default connect(mapStateToProps)(AddCard);

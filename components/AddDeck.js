@@ -3,7 +3,7 @@ import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import {NavigationActions} from 'react-navigation';
 import {connect} from 'react-redux';
 import {addDeck} from '../actions';
-import {saveDeckTitle} from '../utils/helpers';
+import {saveDeck} from '../utils/helpers';
 
 class AddDeck extends Component {
   state = {
@@ -11,19 +11,20 @@ class AddDeck extends Component {
   };
 
   submit = () => {
-    const {title} = this.state;
-    const {decks, dispatch} = this.props;
-    if (!decks[title]) {
+    const title = this.state.title.trim();
+    const {decks, dispatch, navigation} = this.props;
+    if (title && !decks[title]) {
+      const deck = {
+        title,
+        questions: []
+      };
       dispatch(addDeck({
-        [title]: {
-          title,
-          questions: []
-        }
+        [title]: deck
       }));
-      this.props.navigation.dispatch(NavigationActions.back({
+      navigation.dispatch(NavigationActions.back({
         key: 'New'
       }));
-      saveDeckTitle(title)
+      saveDeck(deck)
         .then(() => this.setState({title: ''}));
     }
   };
@@ -56,9 +57,7 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps (state) {
-  return {
-    decks: state
-  };
+  return {decks: state};
 }
 
 export default connect(mapStateToProps)(AddDeck);
