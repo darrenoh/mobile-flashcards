@@ -32,6 +32,7 @@ class DeckList extends Component {
     const {decks} = this.props;
     return (
       <FlatList
+        style={styles.container}
         data={Object.values(decks)}
         keyExtractor={this.keyExtractor}
         renderItem={this.renderItem}
@@ -42,7 +43,6 @@ class DeckList extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff'
   }
 });

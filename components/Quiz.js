@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {connect} from 'react-redux';
 import {getDeck} from '../utils/helpers';
-import {Card} from './Card';
+import Card from './Card';
 
-export default class Quiz extends Component {
+class Quiz extends Component {
   state = {
-    title: '',
-    questions: [],
-    question: 0,
+    card: 0,
     correct: 0
   };
 
@@ -19,23 +18,20 @@ export default class Quiz extends Component {
   };
 
   next = () => {
-    let {question} = this.state;
-    question++;
-    this.setState({question});
+    let {card} = this.state;
+    card++;
+    this.setState({card});
   };
 
-  componentDidMount () {
-    getDeck(this.props.id)
-      .then(deck => this.setState({...deck}));
-  }
-
   render () {
-    const {questions, question, correct} = this.state;
-    if (question < questions.length) {
+    const {decks, title} = this.props;
+    const {questions} = decks[title];
+    const {card, correct} = this.state;
+    if (card < questions.length) {
       return (
         <View>
-          <Text>{question + 1} / {questions.length}</Text>
-          <Card question={questions[question]} />
+          <Text>{card + 1} / {questions.length}</Text>
+          <Card card={questions[card]} />
           <View>
             <TouchableOpacity onPress={this.correct}>
               <Text>Correct</Text>
@@ -50,9 +46,19 @@ export default class Quiz extends Component {
     else {
       return (
         <View>
-          <Text>{Math.round(correct / questions.length * 100)}% correct!</Text>
+          <Text>{Math.round(correct / Math.max(questions.length, 1) * 100)}% correct!</Text>
         </View>
       );
     }
   }
 }
+
+function mapStateToProps (state, {navigation}) {
+  const {title} = navigation.state.params;
+  return {
+    decks: state,
+    title
+  };
+}
+
+export default connect(mapStateToProps)(Quiz);

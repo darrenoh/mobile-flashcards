@@ -3,21 +3,25 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 export default class Card extends Component {
   state = {
-    side: 0,
+    side: 'question',
   };
 
   flip = () => {
     const {side} = this.state;
-    const flip = [1, 0];
+    const flip = {
+      question: 'answer',
+      answer: 'question'
+    };
     this.setState({side: flip[side]});
   };
 
   render () {
+    const {side} = this.state;
     return (
       <View>
-        <Text>{this.props.question}</Text>
+        <Text>{this.props.card[side]}</Text>
         <TouchableOpacity onPress={this.flip}>
-          <Text>Answer</Text>
+          <Text>{side === 'question' ? 'Answer' : 'Question'}</Text>
         </TouchableOpacity>
       </View>
     );

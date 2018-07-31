@@ -21,7 +21,14 @@ class Deck extends Component {
         )}>
           <Text>Add Card</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          if (deck.questions.length > 0) {
+            navigation.navigate(
+              'Quiz',
+              {title}
+            );
+          }
+        }}>
           <Text>Start Quiz</Text>
         </TouchableOpacity>
       </View>
