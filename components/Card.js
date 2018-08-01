@@ -18,7 +18,7 @@ export default class Card extends Component {
   render () {
     const {side} = this.state;
     return (
-      <View>
+      <View style={styles.container}>
         <Text>{this.props.card[side]}</Text>
         <TouchableOpacity onPress={this.flip}>
           <Text>{side === 'question' ? 'Answer' : 'Question'}</Text>
@@ -27,3 +27,10 @@ export default class Card extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fff',
+    alignItems: 'center'
+  }
+});

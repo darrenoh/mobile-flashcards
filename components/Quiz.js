@@ -29,10 +29,10 @@ class Quiz extends Component {
     const {card, correct} = this.state;
     if (card < questions.length) {
       return (
-        <View>
+        <View style={styles.container}>
           <Text>{card + 1} / {questions.length}</Text>
           <Card card={questions[card]} />
-          <View>
+          <View style={styles.buttons}>
             <TouchableOpacity onPress={this.correct}>
               <Text>Correct</Text>
             </TouchableOpacity>
@@ -45,13 +45,25 @@ class Quiz extends Component {
     }
     else {
       return (
-        <View>
+        <View style={styles.container}>
           <Text>{Math.round(correct / Math.max(questions.length, 1) * 100)}% correct!</Text>
         </View>
       );
     }
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#fff',
+    alignItems: 'center'
+  },
+  buttons: {
+    alignItems: 'center'
+  }
+});
 
 function mapStateToProps (state, {navigation}) {
   const {title} = navigation.state.params;

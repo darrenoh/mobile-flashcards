@@ -12,7 +12,7 @@ class Deck extends Component {
     const {decks, navigation, title} = this.props;
     const deck = decks[title];
     return (
-      <View>
+      <View style={styles.container}>
         <Text>{title}</Text>
         <Text>{deck.questions.length} {deck.questions.length === 1 ? 'card' : 'cards'}</Text>
         <TouchableOpacity onPress={() => navigation.navigate(
@@ -35,6 +35,15 @@ class Deck extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#fff',
+    alignItems: 'center'
+  }
+});
 
 function mapStateToProps (state, {navigation}) {
   const {title} = navigation.state.params;
