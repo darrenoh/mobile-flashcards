@@ -24,6 +24,13 @@ const Tabs = TabNavigator({
 }, {
   navigationOptions: {
     header: null
+  },
+  tabBarOptions: {
+    activeTintColor: 'black',
+    inactiveTintColor: 'black',
+    style: {
+      backgroundColor: 'white'
+    }
   }
 });
 
@@ -45,6 +52,13 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       title: 'Add Card'
     }
+  }
+}, {
+  navigationOptions: {
+    headerStyle: {
+      backgroundColor: 'black'
+    },
+    headerTintColor: 'white'
   }
 });
 
