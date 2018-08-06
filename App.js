@@ -10,6 +10,7 @@ import AddDeck from './components/AddDeck';
 import Deck from './components/Deck';
 import Quiz from './components/Quiz';
 import AddCard from './components/AddCard';
+import {setLocalNotification} from './utils/helpers';
 
 const Tabs = TabNavigator({
   Decks: {
@@ -63,6 +64,10 @@ const MainNavigator = StackNavigator({
 });
 
 export default class App extends Component {
+  componentDidMount () {
+    setLocalNotification();
+  }
+
   render () {
     const store = createStore(reducer);
     return (
