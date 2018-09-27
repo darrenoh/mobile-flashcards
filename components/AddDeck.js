@@ -32,15 +32,19 @@ class AddDeck extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <Text>What is the title of your new deck?</Text>
+        <Text style={styles.label}>What is the title of your new deck?</Text>
         <TextInput
           onChangeText={title => this.setState({title})}
           onSubmitEditing={this.submit}
           placeholder="Deck Title"
           value={this.state.title}
+          style={styles.input}
         />
-        <TouchableOpacity onPress={this.submit}>
-          <Text>Submit</Text>
+        <TouchableOpacity
+          onPress={this.submit}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
     );
@@ -52,7 +56,36 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#fff',
-    alignItems: 'center'
+    alignItems: 'stretch'
+  },
+  input: {
+    borderStyle: 'solid',
+    borderColor: '#000',
+    borderWidth: 2,
+    borderRadius: 7,
+    fontSize: 20,
+    padding: 10,
+    margin: 40,
+    marginLeft: 30,
+    marginRight: 30
+  },
+  label: {
+    fontSize: 50,
+    textAlign: 'center'
+  },
+  button: {
+    alignSelf: 'center',
+    backgroundColor: '#000',
+    padding: 10,
+    paddingLeft: 40,
+    paddingRight: 40,
+    borderRadius: 7,
+    height: 50,
+    justifyContent: 'center'
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 20
   }
 });
 
