@@ -55,12 +55,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     alignItems: 'stretch'
   },
   input: {
     borderStyle: 'solid',
-    borderColor: '#000',
+    borderColor: 'black',
     borderWidth: 2,
     borderRadius: 7,
     fontSize: 20,
@@ -75,16 +75,17 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: 'center',
-    backgroundColor: '#000',
+    backgroundColor: 'black',
     padding: 10,
     paddingLeft: 40,
     paddingRight: 40,
     borderRadius: 7,
     height: 50,
+    alignItems: 'center',
     justifyContent: 'center'
   },
   buttonText: {
-    color: '#fff',
+    color: 'white',
     fontSize: 20
   }
 });

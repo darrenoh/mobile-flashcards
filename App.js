@@ -31,6 +31,9 @@ const Tabs = TabNavigator({
     inactiveTintColor: 'black',
     style: {
       backgroundColor: 'white'
+    },
+    labelStyle: {
+      fontSize: 15
     }
   }
 });

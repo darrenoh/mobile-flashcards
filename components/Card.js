@@ -19,9 +19,9 @@ export default class Card extends Component {
     const {side} = this.state;
     return (
       <View style={styles.container}>
-        <Text>{this.props.card[side]}</Text>
+        <Text style={styles.label}>{this.props.card[side]}</Text>
         <TouchableOpacity onPress={this.flip}>
-          <Text>{side === 'question' ? 'Answer' : 'Question'}</Text>
+          <Text style={styles.flip}>{side === 'question' ? 'Answer' : 'Question'}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -30,7 +30,17 @@ export default class Card extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     alignItems: 'center'
+  },
+  label: {
+    fontSize: 50,
+    textAlign: 'center',
+    margin: 20
+  },
+  flip: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'red'
   }
 });

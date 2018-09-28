@@ -29,14 +29,20 @@ class Quiz extends Component {
     if (card < questions.length) {
       return (
         <View style={styles.container}>
-          <Text>{card + 1} / {questions.length}</Text>
+          <Text style={styles.count}>{card + 1} / {questions.length}</Text>
           <Card card={questions[card]} />
           <View style={styles.buttons}>
-            <TouchableOpacity onPress={this.correct}>
-              <Text>Correct</Text>
+            <TouchableOpacity
+              onPress={this.correct}
+              style={styles.greenButton}
+            >
+              <Text style={styles.buttonText}>Correct</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.next}>
-              <Text>Incorrect</Text>
+            <TouchableOpacity
+              onPress={this.next}
+              style={styles.redButton}
+            >
+              <Text style={styles.buttonText}>Incorrect</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -44,8 +50,13 @@ class Quiz extends Component {
     }
     else {
       return (
-        <View style={styles.container}>
-          <Text>{Math.round(correct / Math.max(questions.length, 1) * 100)}% correct!</Text>
+        <View style={{
+          backgroundColor: 'white',
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'space-around'
+        }}>
+          <Text style={{fontSize: 50}}>{Math.round(correct / Math.max(questions.length, 1) * 100)}% correct!</Text>
         </View>
       );
     }
@@ -56,11 +67,46 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
-    alignItems: 'center'
+    backgroundColor: 'white',
+    alignItems: 'stretch',
+    justifyContent: 'space-between'
+  },
+  count: {
+    alignSelf: 'flex-start',
+    fontSize: 20
   },
   buttons: {
     alignItems: 'center'
+  },
+  greenButton: {
+    alignSelf: 'center',
+    backgroundColor: 'green',
+    padding: 10,
+    paddingLeft: 40,
+    paddingRight: 40,
+    borderRadius: 7,
+    height: 50,
+    width: "50%",
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 10
+  },
+  redButton: {
+    alignSelf: 'center',
+    backgroundColor: 'red',
+    padding: 10,
+    paddingLeft: 40,
+    paddingRight: 40,
+    borderRadius: 7,
+    height: 50,
+    width: "50%",
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 10
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 20
   }
 });
 

@@ -20,9 +20,9 @@ class DeckList extends Component {
         'Deck',
         {title: item.title}
       )}>
-        <View style={{margin: 20, alignItems: 'center'}}>
-          <Text>{item.title}</Text>
-          <Text>{item.questions.length} {item.questions.length === 1 ? 'card' : 'cards'}</Text>
+        <View style={styles.deck}>
+          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.cards}>{item.questions.length} {item.questions.length === 1 ? 'card' : 'cards'}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -36,6 +36,14 @@ class DeckList extends Component {
         data={Object.values(decks)}
         keyExtractor={this.keyExtractor}
         renderItem={this.renderItem}
+        ItemSeparatorComponent={() => (
+          <View
+            style={{
+              height: 1,
+              backgroundColor: 'grey'
+            }}
+          />
+        )}
       />
     );
   }
@@ -43,7 +51,18 @@ class DeckList extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff'
+    backgroundColor: 'white'
+  },
+  deck: {
+    margin: 60,
+    alignItems: 'center'
+  },
+  title: {
+    fontSize: 30
+  },
+  cards: {
+    fontSize: 20,
+    color: 'grey'
   }
 });
 

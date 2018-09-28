@@ -40,15 +40,20 @@ class AddCard extends Component {
           onChangeText={question => this.setState({question})}
           placeholder="Question"
           value={this.state.question}
+          style={styles.input}
         />
         <TextInput
           onChangeText={answer => this.setState({answer})}
           onSubmitEditing={this.submit}
           placeholder="Answer"
           value={this.state.answer}
+          style={styles.input}
         />
-        <TouchableOpacity onPress={this.submit}>
-          <Text>Submit</Text>
+        <TouchableOpacity
+          onPress={this.submit}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
     );
@@ -59,8 +64,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
-    alignItems: 'center'
+    backgroundColor: 'white',
+    alignItems: 'stretch'
+  },
+  input: {
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 7,
+    fontSize: 20,
+    padding: 10,
+    margin: 20
+  },
+  button: {
+    alignSelf: 'center',
+    backgroundColor: 'black',
+    padding: 10,
+    paddingLeft: 40,
+    paddingRight: 40,
+    borderRadius: 7,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 20
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 20
   }
 });
 
