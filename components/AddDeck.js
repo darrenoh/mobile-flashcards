@@ -13,7 +13,7 @@ class AddDeck extends Component {
   submit = () => {
     const title = this.state.title.trim();
     const {decks, dispatch, navigation} = this.props;
-    if (title && !decks[title]) {
+    if (!decks[title]) {
       const deck = {
         title,
         questions: []
@@ -43,6 +43,7 @@ class AddDeck extends Component {
         <TouchableOpacity
           onPress={this.submit}
           style={styles.button}
+          disabled={this.state.title.trim().length === 0}
         >
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>

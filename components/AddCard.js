@@ -14,23 +14,19 @@ class AddCard extends Component {
   submit = () => {
     const {decks, dispatch, navigation, title} = this.props;
     const deck = decks[title];
-    const question = this.state.question.trim();
-    const answer = this.state.answer.trim();
-    if (question && answer) {
-      deck.questions.push({
-        question,
-        answer
-      });
-      dispatch(addDeck({
-        [title]: deck
+    deck.questions.push({
+      question: this.state.question.trim(),
+      answer: this.state.answer.trim()
+    });
+    dispatch(addDeck({
+      [title]: deck
+    }));
+    navigation.dispatch(NavigationActions.back());
+    saveDeck(deck)
+      .then(() => this.setState({
+        question: '',
+        answer: ''
       }));
-      navigation.dispatch(NavigationActions.back());
-      saveDeck(deck)
-        .then(() => this.setState({
-          question: '',
-          answer: ''
-        }));
-    }
   };
 
   render () {
@@ -52,6 +48,7 @@ class AddCard extends Component {
         <TouchableOpacity
           onPress={this.submit}
           style={styles.button}
+          disabled={this.state.question.trim().length === 0 || this.state.answer.trim().length === 0}
         >
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
