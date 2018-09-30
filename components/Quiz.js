@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {NavigationActions} from 'react-navigation';
 import {connect} from 'react-redux';
 import Card from './Card';
 
@@ -23,7 +24,7 @@ class Quiz extends Component {
   };
 
   render () {
-    const {decks, title} = this.props;
+    const {decks, navigation, title} = this.props;
     const {questions} = decks[title];
     const {card, correct} = this.state;
     if (card < questions.length) {
@@ -57,6 +58,27 @@ class Quiz extends Component {
           justifyContent: 'space-around'
         }}>
           <Text style={{fontSize: 50}}>{Math.round(correct / Math.max(questions.length, 1) * 100)}% correct!</Text>
+          <View style={styles.buttons}>
+            <TouchableOpacity
+              onPress={() => {
+                this.setState({
+                  card: 0,
+                  correct: 0
+                });
+              }}
+              style={styles.whiteButton}
+            >
+              <Text style={styles.whiteButtonText}>Restart Quiz</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.dispatch(NavigationActions.back());
+              }}
+              style={styles.blackButton}
+            >
+              <Text style={styles.blackButtonText}>Back to Deck</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       );
     }
@@ -105,6 +127,46 @@ const styles = StyleSheet.create({
     margin: 10
   },
   buttonText: {
+    color: 'white',
+    fontSize: 20
+  },
+  whiteButton: {
+    alignSelf: 'center',
+    backgroundColor: 'white',
+    padding: 10,
+    paddingLeft: 40,
+    paddingRight: 40,
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 7,
+    height: 50,
+    width: "50%",
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 10
+  },
+  whiteButtonText: {
+    color: 'black',
+    fontSize: 20
+  },
+  blackButton: {
+    alignSelf: 'center',
+    backgroundColor: 'black',
+    padding: 10,
+    paddingLeft: 40,
+    paddingRight: 40,
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 7,
+    height: 50,
+    width: "50%",
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 10
+  },
+  blackButtonText: {
     color: 'white',
     fontSize: 20
   }
